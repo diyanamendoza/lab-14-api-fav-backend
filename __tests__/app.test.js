@@ -28,25 +28,44 @@ describe('app routes', () => {
       return client.end(done);
     });
 
-    test('returns favs', async() => {
+    // test('returns favs', async() => {
+
+    //   const expectation = [
+    //     {
+    //       id: expect.any(Number),
+    //       name: 'bessie',
+    //       image: 'http://www.placecage.com/200/200',
+    //       rating: 'great',
+    //       url: 'blah',
+    //       owner_id: expect.any(Number)
+    //     }
+    //   ];
+
+    //   const data = await fakeRequest(app)
+    //     .get('/favs')
+    //     .expect('Content-Type', /json/)
+    //     .expect(200);
+
+    //   expect(data.body).toEqual(expectation);
+    // });
+
+    test('returns search', async() => {
 
       const expectation = [
         {
-          id: expect.any(Number),
-          name: 'bessie',
-          image: 'http://www.placecage.com/200/200',
-          rating: 'great',
-          url: 'blah',
-          owner_id: expect.any(Number)
+          name: expect.any(String),
+          image: expect.any(String),
+          rating: expect.any(Number),
+          url: expect.any(String),
         }
       ];
 
       const data = await fakeRequest(app)
-        .get('/favs')
+        .get('/search?q=pasta')
         .expect('Content-Type', /json/)
         .expect(200);
 
-      expect(data.body).toEqual(expectation);
+      expect(data.body).toEqual(expect.arrayContaining(expectation));
     });
   });
 });
