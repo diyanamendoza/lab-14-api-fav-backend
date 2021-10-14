@@ -28,26 +28,80 @@ describe('app routes', () => {
       return client.end(done);
     });
 
-    // test('returns favs', async() => {
+    test('creates a fav', async() => {
 
-    //   const expectation = [
-    //     {
-    //       id: expect.any(Number),
-    //       name: 'bessie',
-    //       image: 'http://www.placecage.com/200/200',
-    //       rating: 'great',
-    //       url: 'blah',
-    //       owner_id: expect.any(Number)
-    //     }
-    //   ];
+      const expectation = [
+        {
+          id: expect.any(Number),
+          name: 'fred',
+          image: 'http://www.placecage.com/200/200',
+          rating: 'great',
+          url: 'blah',
+          owner_id: expect.any(Number)
+        }
+      ];
 
-    //   const data = await fakeRequest(app)
-    //     .get('/favs')
-    //     .expect('Content-Type', /json/)
-    //     .expect(200);
+      const newFav = {
+        name: 'fred',
+        image: 'http://www.placecage.com/200/200',
+        rating: 'great',
+        url: 'blah',
+      };
 
-    //   expect(data.body).toEqual(expectation);
-    // });
+      const data = await fakeRequest(app)
+        .post('/api/favs')
+        .send(newFav)
+        .set('Authorization', token)
+        .expect('Content-Type', /json/)
+        .expect(200);
+
+      expect(data.body).toEqual(expectation);
+    });
+
+    test('get favs', async() => {
+
+      const expectation = [
+        {
+          id: expect.any(Number),
+          name: 'fred',
+          image: 'http://www.placecage.com/200/200',
+          rating: 'great',
+          url: 'blah',
+          owner_id: expect.any(Number)
+        }
+      ];
+
+      const data = await fakeRequest(app)
+        .get('/api/favs')
+        .set('Authorization', token)
+        .expect('Content-Type', /json/)
+        .expect(200);
+
+      expect(data.body).toEqual(expect.arrayContaining(expectation));
+    });
+
+
+    test('delete fav', async() => {
+
+      const expectation = [
+        {
+          id: expect.any(Number),
+          name: 'fred',
+          image: 'http://www.placecage.com/200/200',
+          rating: 'great',
+          url: 'blah',
+          owner_id: expect.any(Number)
+        }
+      ];
+
+      const data = await fakeRequest(app)
+        .delete('/api/favs/2')
+        .set('Authorization', token)
+        .expect('Content-Type', /json/)
+        .expect(200);
+
+      expect(data.body).toEqual(expectation);
+    });
 
     test('returns search', async() => {
 
@@ -67,5 +121,8 @@ describe('app routes', () => {
 
       expect(data.body).toEqual(expect.arrayContaining(expectation));
     });
+
+
+
   });
 });
