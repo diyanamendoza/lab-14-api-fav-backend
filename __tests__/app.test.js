@@ -48,5 +48,24 @@ describe('app routes', () => {
 
     //   expect(data.body).toEqual(expectation);
     // });
+
+    test('returns search', async() => {
+
+      const expectation = [
+        {
+          name: expect.any(String),
+          image: expect.any(String),
+          rating: expect.any(Number),
+          url: expect.any(String),
+        }
+      ];
+
+      const data = await fakeRequest(app)
+        .get('/search?q=pasta')
+        .expect('Content-Type', /json/)
+        .expect(200);
+
+      expect(data.body).toEqual(expect.arrayContaining(expectation));
+    });
   });
 });
