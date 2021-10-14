@@ -28,31 +28,21 @@ describe('app routes', () => {
       return client.end(done);
     });
 
-    test('returns animals', async() => {
+    test('returns favs', async() => {
 
       const expectation = [
         {
-          'id': 1,
-          'name': 'bessie',
-          'cool_factor': 3,
-          'owner_id': 1
-        },
-        {
-          'id': 2,
-          'name': 'jumpy',
-          'cool_factor': 4,
-          'owner_id': 1
-        },
-        {
-          'id': 3,
-          'name': 'spot',
-          'cool_factor': 10,
-          'owner_id': 1
+          id: expect.any(Number),
+          name: 'bessie',
+          image: 'http://www.placecage.com/200/200',
+          rating: 'great',
+          url: 'blah',
+          owner_id: expect.any(Number)
         }
       ];
 
       const data = await fakeRequest(app)
-        .get('/animals')
+        .get('/favs')
         .expect('Content-Type', /json/)
         .expect(200);
 

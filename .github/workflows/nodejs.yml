@@ -22,3 +22,4 @@ jobs:
       env:
         CI: true
         DATABASE_URL: postgres://postgres:postgres@postgres:5432/postgres
+        YELP_KEY: ${{ secrets.YELP_KEY }}
